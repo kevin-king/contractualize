@@ -1,12 +1,12 @@
 {
   "name": "@kevinki.ng/contractualize",
   "description": "Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, etc. for a single source of truth, automatic documentation, automatic API consumption, etc.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Kevin King",
   "bin": {
     "con": "./bin/run"
   },
-  "bugs": "https://github.com/kevin-king/contract-converter/issues",
+  "bugs": "https://github.com/kevin-king/contractualize/issues",
   "devDependencies": {
     "joi": "17.4.1",
     "joi-to-swagger": "5.2.0",
@@ -34,7 +34,7 @@
     "/bin",
     "/lib"
   ],
-  "homepage": "https://github.com/kevin-king/contract-converter",
+  "homepage": "https://github.com/kevin-king/contractualize",
   "keywords": [
     "oclif"
   ],
@@ -43,7 +43,7 @@
   "oclif": {
     "bin": "con"
   },
-  "repository": "https://github.com/kevin-king/contract-converter.git",
+  "repository": "https://github.com/kevin-king/contractualize.git",
   "scripts": {
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev readme",

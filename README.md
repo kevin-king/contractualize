@@ -4,9 +4,9 @@ Contractualize
 Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, etc. for a single source of truth, automatic documentation, automatic API consumption, etc.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/contractualize.svg)](https://npmjs.org/package/contractualize)
-[![Downloads/week](https://img.shields.io/npm/dw/contractualize.svg)](https://npmjs.org/package/contractualize)
-[![License](https://img.shields.io/npm/l/contractualize.svg)](https://github.com/kevin-king/contractualize/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/@kevinki.ng/contractualize.svg)](https://npmjs.org/package/@kevinki.ng/contractualize)
+[![Downloads/week](https://img.shields.io/npm/dw/@kevinki.ng/contractualize.svg)](https://npmjs.org/package/@kevinki.ng/contractualize)
+[![License](https://img.shields.io/npm/l/@kevinki.ng/contractualize.svg)](https://github.com/kevin-king/@kevinki.ng/contractualize/blob/master/package.json)
 
 * [Usage](#usage)
 * [Commands](#commands)

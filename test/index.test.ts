@@ -2,7 +2,7 @@ import {expect, test} from '@oclif/test'
 
 import cmd = require('../src')
 
-describe('contract-converter', () => {
+describe('contractualize', () => {
   test
   .stdout()
   .do(() => cmd.run([]))
