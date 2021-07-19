@@ -37,7 +37,8 @@ class ContractConverter extends Command {
     const {args, flags} = this.parse(ContractConverter)
 
     const INTPUT_PATH = path.resolve(process.cwd(), flags.path || '')
-    const TMP_PATH = `${INTPUT_PATH}/tmp` // TODO
+    const OUTPUT_PATH = path.resolve(process.cwd(), flags.output || '')
+    const TMP_DIRNAME = 'tmp'
 
     console.log('---------------')
     console.log(' Compiling Joi ')
@@ -49,11 +50,18 @@ class ContractConverter extends Command {
       if (!joiSchema) return
       const { swagger } = j2s(joiSchema, {})
 
-      const outputDir = `${dirPath.replace('/joi', '/autogen')}/`
+      const outputDir = `${dirPath.replace('/joi', `/${TMP_DIRNAME}`)}/`
       fs.mkdirSync(outputDir, {recursive: true})
       fs.writeFileSync(`${outputDir}/${file.replace('.js', '.json')}`, JSON.stringify(swagger))
-      fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/joi', '/autogen').replace('.js', '.joi.js'))
+      if (flags.copy) {
+        fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/joi', `/${TMP_DIRNAME}`).replace('.js', '.joi.js'))
+      }
     })
+
+    // Rename tmp to the output dir. This allows the consumer to use their --output option as their import into OAS
+    // specs. More predictable from consumer standpoint. The compilation step after this will all utilize --output
+    // as well.
+    fs.renameSync(`${INTPUT_PATH}/${TMP_DIRNAME}`, OUTPUT_PATH)
 
     console.log('---------------')
     console.log(' Compiling OAS ')
@@ -61,74 +69,78 @@ class ContractConverter extends Command {
     fs.readdirSync(INTPUT_PATH).forEach((fileName: string) => {
       if (fileName.indexOf('.js') > -1) {
         const swagger = require(`${INTPUT_PATH}/${fileName}`)
-        fs.writeFileSync(`${INTPUT_PATH}/autogen/${fileName.replace('.js', '.oas.json')}`, JSON.stringify(swagger))
+        fs.writeFileSync(`${OUTPUT_PATH}/${fileName.replace('.js', '.oas.json')}`, JSON.stringify(swagger))
       }
     })
 
-    console.log('--------------')
-    console.log(' Compiling TS ')
-    console.log('--------------')
-    fs.readdirSync(`${INTPUT_PATH}/autogen/`).forEach((fileName: string) => {
-      if (fileName.indexOf('.oas.json') <= -1) return
+    if (flags.ts) {
+      console.log('--------------')
+      console.log(' Compiling TS ')
+      console.log('--------------')
+      fs.readdirSync(OUTPUT_PATH).forEach((fileName: string) => {
+        if (fileName.indexOf('.oas.json') <= -1) return
 
-      generateApi({
-        input: path.resolve(process.cwd(), `${INTPUT_PATH}/autogen/${fileName}`),
-        hooks: {
-          // onCreateComponent: (component) => console.log(component),
-          // onCreateRequestParams: (rawType) => console.log(rawType),
-          // onCreateRoute: (routeData) => console.log(routeData),
-          // onCreateRouteName: (routeNameInfo, rawRouteInfo) => console.log(routeNameInfo),
-          // onFormatRouteName: (routeInfo, templateRouteName) => console.log(routeInfo),
-          onFormatTypeName: (typeName, rawTypeName) => `I${typeName}`,
-          // onInit: (configuration) => console.log(component),
-          // onParseSchema: (originalSchema, parsedSchema) => console.log(component),
-          // onPrepareConfig: (currentConfiguration) => console.log(component),
-        },
+        generateApi({
+          input: path.resolve(process.cwd(), `${OUTPUT_PATH}/${fileName}`),
+          hooks: {
+            // onCreateComponent: (component) => console.log(component),
+            // onCreateRequestParams: (rawType) => console.log(rawType),
+            // onCreateRoute: (routeData) => console.log(routeData),
+            // onCreateRouteName: (routeNameInfo, rawRouteInfo) => console.log(routeNameInfo),
+            // onFormatRouteName: (routeInfo, templateRouteName) => console.log(routeInfo),
+            onFormatTypeName: (typeName, rawTypeName) => `I${typeName}`,
+            // onInit: (configuration) => console.log(component),
+            // onParseSchema: (originalSchema, parsedSchema) => console.log(component),
+            // onPrepareConfig: (currentConfiguration) => console.log(component),
+          },
+        })
+        .then(({ files, configuration }) => {
+          files.forEach(({ content, name }) => {
+            fs.writeFileSync(`${OUTPUT_PATH}/${fileName.replace('.oas.json', '.ts')}`, content)
+          })
+        })
+        .catch(error => console.error(error))
       })
-      .then(({ files, configuration }) => {
-        files.forEach(({ content, name }) => {
-          fs.writeFileSync(`${INTPUT_PATH}/autogen/${fileName.replace('.oas.json', '.ts')}`, content)
+    }
+
+    if (flags.postman) {
+      console.log('-------------------')
+      console.log(' Compiling Postman ')
+      console.log('-------------------')
+      fs.readdirSync(OUTPUT_PATH).forEach((fileName: string) => {
+        if (fileName.indexOf('.oas.json') <= -1) return
+
+        const openapiData = fs.readFileSync(`${OUTPUT_PATH}/${fileName}`, {encoding: 'UTF8'})
+
+        Converter.convert({ type: 'string', data: openapiData }, {}, (error: any, conversionResult: any) => {
+          if (error) {
+            console.error(error)
+            return
+          }
+
+          if (conversionResult.result) {
+            fs.writeFileSync(`${OUTPUT_PATH}/${fileName.replace('.oas.json', '.postman.json')}`, JSON.stringify(conversionResult.output[0].data))
+          } else {
+            console.error('Could not convert', conversionResult.reason)
+          }
         })
       })
-      .catch(error => console.error(error))
-    })
 
-    console.log('-------------------')
-    console.log(' Compiling Postman ')
-    console.log('-------------------')
-    fs.readdirSync(`${INTPUT_PATH}/autogen/`).forEach((fileName: string) => {
-      if (fileName.indexOf('.oas.json') <= -1) return
+      console.log('----------------')
+      console.log(' Extend Postman ')
+      console.log('----------------')
+      forEachFileIn(OUTPUT_PATH, (dirPathAutogen, fileAutogen) => {
+        if (fileAutogen.indexOf('.postman.json') <= -1) return
 
-      const openapiData = fs.readFileSync(`${INTPUT_PATH}/autogen/${fileName}`, {encoding: 'UTF8'})
+        forEachFileIn(`${INTPUT_PATH}/postman/`, (dirPathPostman, filePostman) => {
 
-      Converter.convert({ type: 'string', data: openapiData }, {}, (error: any, conversionResult: any) => {
-        if (error) {
-          console.error(error)
-          return
-        }
-
-        if (conversionResult.result) {
-          fs.writeFileSync(`${INTPUT_PATH}/autogen/${fileName.replace('.oas.json', '.postman.json')}`, JSON.stringify(conversionResult.output[0].data))
-        } else {
-          console.error('Could not convert', conversionResult.reason)
-        }
+          if (fileAutogen.replace('.postman.json', '.js') === filePostman) {
+            const postmanObject = require(`${dirPathPostman}${filePostman}`)
+            fs.writeFileSync(`${dirPathAutogen}/${fileAutogen}`, JSON.stringify(postmanObject))
+          }
+        })
       })
-    })
-
-    console.log('----------------')
-    console.log(' Extend Postman ')
-    console.log('----------------')
-    forEachFileIn(`${INTPUT_PATH}/autogen/`, (dirPathAutogen, fileAutogen) => {
-      if (fileAutogen.indexOf('.postman.json') <= -1) return
-
-      forEachFileIn(`${INTPUT_PATH}/postman/`, (dirPathPostman, filePostman) => {
-
-        if (fileAutogen.replace('.postman.json', '.js') === filePostman) {
-          const postmanObject = require(`${dirPathPostman}${filePostman}`)
-          fs.writeFileSync(`${dirPathAutogen}${fileAutogen}`, JSON.stringify(postmanObject))
-        }
-      })
-    })
+    }
   }
 }
 
