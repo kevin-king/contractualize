@@ -8,7 +8,7 @@ const ResponseHelicopter = require('../autogen/service2/ResponseHelicopter');
 module.exports = {
   openapi: '3.0.1',
   info: {
-    title: 'Service to get air vehicles',
+    title: 'Air Vehicle API',
     version: '0.0.0',
     description: 'This is an API where you specify air vehicle parts and get out air vehicle specs',
   },

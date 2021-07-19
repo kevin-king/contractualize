@@ -8,7 +8,7 @@ const ResponseTruck = require('../autogen/service1/ResponseTruck');
 module.exports = {
   openapi: '3.0.1',
   info: {
-    title: 'Service to get land vehicles',
+    title: 'Land Vehicle API',
     version: '0.0.0',
     description: 'This is an API where you specify land vehicle parts and get out land vehicle specs',
   },

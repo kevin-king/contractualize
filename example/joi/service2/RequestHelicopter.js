@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const Engine = require("../common/Engine");
+const { Engine } = require("../common/Engine");
 
 module.exports.RequestHelicopter = Joi.object({
   parts: Joi.object({
