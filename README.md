@@ -39,9 +39,9 @@ limitation than a technical one. If the library gains any traction, this could b
 must look like this:
 
 ```sh-session
-$ tree ./examples/api-contracts/
-./examples/api-contracts/
-├── joi
+$ tree ./example
+./example
+├── joi                                // can be hierarchical
 │   ├── common
 │   │   ├── Engine.js
 │   │   └── Wheel.js
@@ -55,18 +55,18 @@ $ tree ./examples/api-contracts/
 │       ├── RequestHelicopter.js
 │       ├── ResponseAircraft.js
 │       └── ResponseHelicopter.js
-├── postman
-│   └── service1.js
-├── swagger
-│   └── CommonHeaderParams.js
-├── service1.js
+├── postman                             // must be flat -- allows things like Pre-request Scripts in Postman
+│   └── service1.js                     // must have same name as root-level service1.js
+├── swagger                             // other arbitrary directories are allowed, but are incompatible with --joi flag
+│   └── CommonHeaderParams.js           // raw OAS 3.0 for use in root-level service1.js, for example
+├── service1.js                         // OAS 3.0 specs are flat and at the root
 └── service2.js
 
 6 directories, 14 files
 ```
 
 ```sh-session
-$ con --input ./examples/api-contracts/ --output ./examples/autogen/ --joi --ts --postman
+$ con --input ./example --output ./autogen --joi --ts --postman
 ---------------
  Compiling Joi 
 ---------------
@@ -91,8 +91,8 @@ $ con --input ./examples/api-contracts/ --output ./examples/autogen/ --joi --ts 
 ```
 
 ```sh-session
-$ tree ./examples/autogen/
-./examples/autogen/
+$ tree ./autogen
+./autogen
 ├── common
 │   ├── Engine.json
 │   └── Wheel.json
