@@ -54,7 +54,8 @@ class ContractConverter extends Command {
         fs.writeFileSync(`${outputDir}/${file.replace('.js', '.json')}`, JSON.stringify(swagger))
       }
       if (flags.joi) {
-        fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/joi', `/${TMP_DIRNAME}`).replace('.js', '.joi.js'))
+        fs.mkdirSync(dirPath.replace('/joi', `/${TMP_DIRNAME}/joi`), {recursive: true})
+        fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/joi', `/${TMP_DIRNAME}/joi`))
       }
     })
 
