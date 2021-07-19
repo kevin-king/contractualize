@@ -46,12 +46,13 @@ class ContractConverter extends Command {
       const model = require(`${dirPath}/${file}`)
       const joiSchema = model[file.replace('.js', '')]
 
-      if (!joiSchema) return
-      const { swagger } = j2s(joiSchema, {})
+      if (joiSchema) {
+        const { swagger } = j2s(joiSchema, {})
 
-      const outputDir = `${dirPath.replace('/joi', `/${TMP_DIRNAME}`)}/`
-      fs.mkdirSync(outputDir, {recursive: true})
-      fs.writeFileSync(`${outputDir}/${file.replace('.js', '.json')}`, JSON.stringify(swagger))
+        const outputDir = `${dirPath.replace('/joi', `/${TMP_DIRNAME}`)}/`
+        fs.mkdirSync(outputDir, {recursive: true})
+        fs.writeFileSync(`${outputDir}/${file.replace('.js', '.json')}`, JSON.stringify(swagger))
+      }
       if (flags.joi) {
         fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/joi', `/${TMP_DIRNAME}`).replace('.js', '.joi.js'))
       }
