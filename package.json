@@ -1,5 +1,5 @@
 {
-  "name": "contract-converter",
+  "name": "@kevinki.ng/contractualize",
   "description": "Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, etc. for a single source of truth, automatic documentation, automatic API consumption, etc.",
   "version": "0.0.0",
   "author": "Kevin King",

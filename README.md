@@ -15,11 +15,11 @@ Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, et
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g contract-converter
+$ npm install -g @kevinki.ng/contractualize
 $ con COMMAND
 running command...
 $ con (-v|--version|version)
-contract-converter/0.0.0 darwin-x64 node-v14.17.0
+@kevinki.ng/contractualize/0.0.0 darwin-x64 node-v14.17.0
 $ con --help [COMMAND]
 USAGE
   $ con COMMAND
