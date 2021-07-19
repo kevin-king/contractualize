@@ -39,7 +39,7 @@ limitation than a technical one. If the library gains any traction, this could b
 must look like this:
 
 ```sh-session
-contractualize (master) tree examples/api-contracts/
+$ tree examples/api-contracts/
 examples/api-contracts/
 ├── joi
 │   ├── common
@@ -66,7 +66,7 @@ examples/api-contracts/
 ```
 
 ```sh-session
-contractualize (master) ./bin/run --input ./examples/api-contracts/ --output ./examples/autogen/ --joi --ts --postman
+$ con --input ./examples/api-contracts/ --output ./examples/autogen/ --joi --ts --postman
 ---------------
  Compiling Joi 
 ---------------
@@ -91,7 +91,7 @@ contractualize (master) ./bin/run --input ./examples/api-contracts/ --output ./e
 ```
 
 ```sh-session
-contractualize (master) tree examples/autogen/
+$ tree examples/autogen/
 examples/autogen/
 ├── common
 │   ├── Engine.json
