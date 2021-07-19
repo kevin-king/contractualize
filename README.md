@@ -1,7 +1,7 @@
 Contractualize
 ==============
 
-Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, etc. for a single source of truth, automatic documentation, automatic API consumption, etc.
+Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@kevinki.ng/contractualize.svg)](https://npmjs.org/package/@kevinki.ng/contractualize)
@@ -9,7 +9,7 @@ Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, et
 [![License](https://img.shields.io/npm/l/@kevinki.ng/contractualize.svg)](https://github.com/kevin-king/@kevinki.ng/contractualize/blob/master/package.json)
 
 * [Usage](#usage)
-* [Commands](#commands)
+* [Example](#example)
 
 # Usage
 ```sh-session
@@ -17,7 +17,7 @@ $ npm install --save-dev @kevinki.ng/contractualize
 $ con --version
 @kevinki.ng/contractualize/0.0.0 darwin-x64 node-v14.17.0
 $ con --help
-Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, etc. for a single source of truth, automatic documentation, automatic API consumption, etc.
+Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.
 
 USAGE
   $ con
@@ -39,8 +39,8 @@ limitation than a technical one. If the library gains any traction, this could b
 must look like this:
 
 ```sh-session
-$ tree examples/api-contracts/
-examples/api-contracts/
+$ tree ./examples/api-contracts/
+./examples/api-contracts/
 ├── joi
 │   ├── common
 │   │   ├── Engine.js
@@ -91,8 +91,8 @@ $ con --input ./examples/api-contracts/ --output ./examples/autogen/ --joi --ts 
 ```
 
 ```sh-session
-$ tree examples/autogen/
-examples/autogen/
+$ tree ./examples/autogen/
+./examples/autogen/
 ├── common
 │   ├── Engine.json
 │   └── Wheel.json
