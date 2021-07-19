@@ -24,11 +24,11 @@ class ContractConverter extends Command {
     version: flags.version({char: 'v'}),
     help: flags.help({char: 'h'}),
     name: flags.string({char: 'n', description: 'Name to print'}),
-    path: flags.string({char: 'p', description: 'Path to directory with Joi schemas'}),
+    input: flags.string({char: 'i', description: 'Path to directory with Joi schemas'}),
     output: flags.string({char: 'o', description: 'Directory to store output'}),
-    copy: flags.boolean({char: 'c', description: 'Copies Joi schemas to directory specified by output'}),
-    postman: flags.boolean({description: 'Compiles Postman scripts from OAS spec'}),
-    ts: flags.boolean({description: 'Compiles Typescript Interfaces from OAS spec'}),
+    postman: flags.boolean({char: 'p', description: 'Compiles Postman scripts from OAS spec to directory specified by output'}),
+    ts: flags.boolean({char: 't', description: 'Compiles Typescript Interfaces from OAS spec to directory specified by output'}),
+    joi: flags.boolean({char: 'c', description: 'Copies Joi to directory specified by output'}),
   }
 
   // static args = [{name: 'file'}]
@@ -53,7 +53,7 @@ class ContractConverter extends Command {
       const outputDir = `${dirPath.replace('/joi', `/${TMP_DIRNAME}`)}/`
       fs.mkdirSync(outputDir, {recursive: true})
       fs.writeFileSync(`${outputDir}/${file.replace('.js', '.json')}`, JSON.stringify(swagger))
-      if (flags.copy) {
+      if (flags.joi) {
         fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/joi', `/${TMP_DIRNAME}`).replace('.js', '.joi.js'))
       }
     })
