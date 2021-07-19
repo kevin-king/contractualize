@@ -39,32 +39,93 @@ limitation than a technical one. If the library gains any traction, this could b
 must look like this:
 
 ```sh-session
-$ tree
-.
-├── joi                                 // required
-│   ├── common                          // models can be nested as much as necessary
-│   │   ├── Engine.js                   // Directory structure maintained by --joi flag
+contractualize (master) tree examples/api-contracts/
+examples/api-contracts/
+├── joi
+│   ├── common
+│   │   ├── Engine.js
 │   │   └── Wheel.js
 │   ├── service1
 │   │   ├── RequestCar.js
-│   │   ├── ResponseCar.js
 │   │   ├── RequestTruck.js
+│   │   ├── ResponseCar.js
 │   │   └── ResponseTruck.js
-│   └── service2.js
+│   └── service2
 │       ├── RequestAircraft.js
-│       ├── ResponseAircraft.js
 │       ├── RequestHelicopter.js
+│       ├── ResponseAircraft.js
 │       └── ResponseHelicopter.js
-├── postman                             // allows Pre-Request scripts and other customizations of auto-generated Postman
-│   └── service1.js                     // must be the same name as the root-level service1.js
-├── anything-other-dirs-are-fine        // arbitrary, you can have as many additional directories as you'd like
-│   └── CommonHeaderParams.js           // as long as they are not imported into /joi (use in root-level service1.js)
-├── service1.js                         // required, library can handle as many root-level OAS specs as needed
+├── postman
+│   └── service1.js
+├── swagger
+│   └── CommonHeaderParams.js
+├── service1.js
 └── service2.js
 
-$ con --
+6 directories, 14 files
 ```
 
 ```sh-session
-con --input ./examples/api-contracts/ --output ./autogen/ --joi --ts --postman
+contractualize (master) ./bin/run --input ./examples/api-contracts/ --output ./examples/autogen/ --joi --ts --postman
+---------------
+ Compiling Joi 
+---------------
+---------------
+ Compiling OAS 
+---------------
+--------------
+ Compiling TS 
+--------------
+✨   try to get swagger by path "/Users/kking/code/contractualize/examples/autogen/service1.oas.json"
+✨   try to get swagger by path "/Users/kking/code/contractualize/examples/autogen/service2.oas.json"
+-------------------
+ Compiling Postman 
+-------------------
+----------------
+ Extend Postman 
+----------------
+✨   try to read templates from directory "/Users/kking/code/contractualize/node_modules/swagger-typescript-api/templates/default"
+☄️    start generating your typescript api
+✨   try to read templates from directory "/Users/kking/code/contractualize/node_modules/swagger-typescript-api/templates/default"
+☄️    start generating your typescript api
+```
+
+```sh-session
+contractualize (master) tree examples/autogen/
+examples/autogen/
+├── common
+│   ├── Engine.json
+│   └── Wheel.json
+├── joi
+│   ├── common
+│   │   ├── Engine.js
+│   │   └── Wheel.js
+│   ├── service1
+│   │   ├── RequestCar.js
+│   │   ├── RequestTruck.js
+│   │   ├── ResponseCar.js
+│   │   └── ResponseTruck.js
+│   └── service2
+│       ├── RequestAircraft.js
+│       ├── RequestHelicopter.js
+│       ├── ResponseAircraft.js
+│       └── ResponseHelicopter.js
+├── service1
+│   ├── RequestCar.json
+│   ├── RequestTruck.json
+│   ├── ResponseCar.json
+│   └── ResponseTruck.json
+├── service2
+│   ├── RequestAircraft.json
+│   ├── RequestHelicopter.json
+│   ├── ResponseAircraft.json
+│   └── ResponseHelicopter.json
+├── service1.oas.json
+├── service1.postman.json
+├── service1.ts
+├── service2.oas.json
+├── service2.postman.json
+└── service2.ts
+
+7 directories, 26 files
 ```
