@@ -18,17 +18,16 @@ function forEachFileIn(dirPath: string, callback: (arg0: string, arg1: string) =
 }
 
 class ContractConverter extends Command {
-  static description = 'describe the command here'
+  static description = 'Library that converts models between Joi, OAS (Swagger), Postman, TypeScript, etc. for a single source of truth, automatic documentation, automatic API consumption, etc.'
 
   static flags = {
-    version: flags.version({char: 'v'}),
     help: flags.help({char: 'h'}),
-    name: flags.string({char: 'n', description: 'Name to print'}),
     input: flags.string({char: 'i', description: 'Path to directory with Joi schemas'}),
+    joi: flags.boolean({char: 'j', description: 'Copies Joi to directory specified by output'}),
     output: flags.string({char: 'o', description: 'Directory to store output'}),
     postman: flags.boolean({char: 'p', description: 'Compiles Postman scripts from OAS spec to directory specified by output'}),
     ts: flags.boolean({char: 't', description: 'Compiles Typescript Interfaces from OAS spec to directory specified by output'}),
-    joi: flags.boolean({char: 'c', description: 'Copies Joi to directory specified by output'}),
+    version: flags.version({char: 'v'}),
   }
 
   // static args = [{name: 'file'}]
