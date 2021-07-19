@@ -21,13 +21,13 @@ class ContractConverter extends Command {
   static description = 'Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.'
 
   static flags = {
-    help: flags.help({char: 'h'}),
+    help: flags.help({char: 'h', description: 'Show CLI help'}),
     input: flags.string({char: 'i', description: 'Path to directory with Joi schemas'}),
     joi: flags.boolean({char: 'j', description: 'Copies Joi to directory specified by output'}),
     output: flags.string({char: 'o', description: 'Directory to store output'}),
     postman: flags.boolean({char: 'p', description: 'Compiles Postman scripts from OAS spec to directory specified by output'}),
     ts: flags.boolean({char: 't', description: 'Compiles Typescript Interfaces from OAS spec to directory specified by output'}),
-    version: flags.version({char: 'v'}),
+    version: flags.version({char: 'v', description: 'Show CLI version'}),
   }
 
   // static args = [{name: 'file'}]
@@ -69,8 +69,15 @@ class ContractConverter extends Command {
     console.log('---------------')
     fs.readdirSync(INTPUT_PATH).forEach((fileName: string) => {
       if (fileName.indexOf('.js') > -1) {
-        const swagger = require(`${INTPUT_PATH}/${fileName}`)
+        let fileContent = fs.readFileSync(`${INTPUT_PATH}/${fileName}`).toString()
+        fileContent = fileContent.split(require('../package.json').name).join(OUTPUT_PATH)
+
+        fs.writeFileSync(`${INTPUT_PATH}/${fileName}.tmp`, fileContent)
+
+        const swagger = require(`${INTPUT_PATH}/${fileName}.tmp`)
         fs.writeFileSync(`${OUTPUT_PATH}/${fileName.replace('.js', '.oas.json')}`, JSON.stringify(swagger))
+
+        fs.unlinkSync(`${INTPUT_PATH}/${fileName}.tmp`)
       }
     })
 

@@ -1,9 +1,9 @@
 const { CommonHeaderParams } = require('./swagger/CommonHeaderParams');
 
-const RequestCar = require('../autogen/service1/RequestCar');
-const ResponseCar = require('../autogen/service1/ResponseCar');
-const RequestTruck = require('../autogen/service1/RequestTruck');
-const ResponseTruck = require('../autogen/service1/ResponseTruck');
+const RequestCar = require('@kevinki.ng/contractualize/service1/RequestCar');
+const ResponseCar = require('@kevinki.ng/contractualize/service1/ResponseCar');
+const RequestTruck = require('@kevinki.ng/contractualize/service1/RequestTruck');
+const ResponseTruck = require('@kevinki.ng/contractualize/service1/ResponseTruck');
 
 module.exports = {
   openapi: '3.0.1',
