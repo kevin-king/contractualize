@@ -2,10 +2,12 @@ const Joi = require("joi");
 const { Engine, Wheel } = require("./common");
 
 module.exports = {
+  Engine,
+  Wheel,
   RequestAircraft: Joi.object({
     parts: Joi.object({
-      engine: Engine,
-      wheels: Joi.array().items(Wheel).length(2),
+      engine: Engine.meta({ className: 'Engine' }),
+      wheels: Joi.array().items(Wheel.meta({ className: 'Wheel' })).length(2),
     }),
     color: Joi.string(),
     wingWidth: Joi.number().required(),
@@ -19,7 +21,7 @@ module.exports = {
 
   RequestHelicopter: Joi.object({
     parts: Joi.object({
-      engine: Engine,
+      engine: Engine.meta({ className: 'Engine' }),
     }),
     color: Joi.string(),
     bladeLength: Joi.number().required(),

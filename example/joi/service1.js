@@ -2,10 +2,12 @@ const Joi = require("joi");
 const { Engine, Wheel } = require("./common");
 
 module.exports = {
+  Engine,
+  Wheel,
   RequestCar: Joi.object({
     parts: Joi.object({
-      engine: Engine,
-      wheels: Joi.array().items(Wheel).length(4),
+      engine: Engine.meta({ className: 'Engine' }),
+      wheels: Joi.array().items(Wheel.meta({ className: 'Wheel' })).length(4),
     }),
     color: Joi.string(),
   }).description("Defines the type of car"),
@@ -18,8 +20,8 @@ module.exports = {
 
   RequestTruck: Joi.object({
     parts: Joi.object({
-      engine: Engine,
-      wheels: Joi.array().items(Wheel).length(16),
+      engine: Engine.meta({ className: 'Engine' }),
+      wheels: Joi.array().items(Wheel.meta({ className: 'Wheel' })).length(16),
     }),
     color: Joi.string(),
     bedSize: Joi.number().required(),
