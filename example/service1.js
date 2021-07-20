@@ -1,5 +1,7 @@
 const { CommonHeaderParams } = require('./swagger/CommonHeaderParams');
 
+const Engine = require('@kevinki.ng/contractualize/common/Engine');
+const Wheel = require('@kevinki.ng/contractualize/common/Wheel');
 const RequestCar = require('@kevinki.ng/contractualize/service1/RequestCar');
 const ResponseCar = require('@kevinki.ng/contractualize/service1/ResponseCar');
 const RequestTruck = require('@kevinki.ng/contractualize/service1/RequestTruck');
@@ -68,6 +70,8 @@ module.exports = {
   },
   components: {
     schemas: {
+      Engine,
+      Wheel,
       RequestCar,
       ResponseCar,
       RequestTruck,
