@@ -1,11 +1,11 @@
 const { CommonHeaderParams } = require('./swagger/CommonHeaderParams');
 
-const Engine = require('@kevinki.ng/contractualize/common/Engine');
-const Wheel = require('@kevinki.ng/contractualize/common/Wheel');
-const RequestCar = require('@kevinki.ng/contractualize/service1/RequestCar');
-const ResponseCar = require('@kevinki.ng/contractualize/service1/ResponseCar');
-const RequestTruck = require('@kevinki.ng/contractualize/service1/RequestTruck');
-const ResponseTruck = require('@kevinki.ng/contractualize/service1/ResponseTruck');
+const Engine = require('@kevinki.ng/contractualize/schema/common/Engine.oas');
+const Wheel = require('@kevinki.ng/contractualize/schema/common/Wheel.oas');
+const RequestCar = require('@kevinki.ng/contractualize/schema/service1/RequestCar.oas');
+const ResponseCar = require('@kevinki.ng/contractualize/schema/service1/ResponseCar.oas');
+const RequestTruck = require('@kevinki.ng/contractualize/schema/service1/RequestTruck.oas');
+const ResponseTruck = require('@kevinki.ng/contractualize/schema/service1/ResponseTruck.oas');
 
 module.exports = {
   openapi: '3.0.1',

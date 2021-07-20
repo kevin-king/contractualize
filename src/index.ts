@@ -24,7 +24,6 @@ class ContractConverter extends Command {
   static flags = {
     help: flags.help({char: 'h', description: 'Show CLI help'}),
     input: flags.string({char: 'i', description: 'Path to directory with Joi schemas'}),
-    joi: flags.boolean({char: 'j', description: 'Copies Joi to directory specified by output'}),
     output: flags.string({char: 'o', description: 'Directory to store output'}),
     postman: flags.boolean({char: 'p', description: 'Compiles Postman scripts from OAS spec to directory specified by output'}),
     ts: flags.boolean({char: 't', description: 'Compiles Typescript Interfaces from OAS spec to directory specified by output'}),
@@ -45,19 +44,18 @@ class ContractConverter extends Command {
     console.log(' Compiling Joi ')
     console.log('---------------')
     forEachFileIn(`${INTPUT_PATH}/schema`, (dirPath: string, file: string) => {
+      fs.mkdirSync(dirPath.replace('/schema', `/${TMP_DIRNAME}/schema`), {recursive: true})
+      fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/schema', `/${TMP_DIRNAME}/schema`))
+
       const model = require(`${dirPath}/${file}`)
       const joiSchema = model[file.replace('.js', '')]
 
       if (joiSchema) {
         const { swagger } = j2s(joiSchema, {})
 
-        const outputDir = `${dirPath.replace('/schema', `/${TMP_DIRNAME}`)}/`
+        const outputDir = dirPath.replace('/schema', `/${TMP_DIRNAME}/schema`)
         fs.mkdirSync(outputDir, {recursive: true})
-        fs.writeFileSync(`${outputDir}/${file.replace('.js', '.json')}`, JSON.stringify(swagger))
-      }
-      if (flags.joi) {
-        fs.mkdirSync(dirPath.replace('/schema', `/${TMP_DIRNAME}/schema`), {recursive: true})
-        fs.copyFileSync(`${dirPath}/${file}`, `${dirPath}/${file}`.replace('/schema', `/${TMP_DIRNAME}/schema`))
+        fs.writeFileSync(`${outputDir}/${file.replace('.js', '.oas.json')}`, JSON.stringify(swagger))
       }
     })
 
@@ -74,7 +72,7 @@ class ContractConverter extends Command {
         let fileContent = fs.readFileSync(`${INTPUT_PATH}/${fileName}`).toString()
         fileContent = fileContent.split(require('../package.json').name).join(OUTPUT_PATH)
 
-        fs.writeFileSync(`${INTPUT_PATH}/${fileName}.tmp`, fileContent)
+        fs.writeFileSync(`${INTPUT_PATH}/${fileName}.tmp`, fileContent) // this tmp is so that we can replace @kevinki.ng/contractualize
 
         const swagger = require(`${INTPUT_PATH}/${fileName}.tmp`)
         enforcer(swagger, { fullResult: true })

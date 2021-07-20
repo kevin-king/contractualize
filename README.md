@@ -23,13 +23,13 @@ USAGE
   $ con
 
 OPTIONS
-  -h, --help           show CLI help
+  -h, --help           Show CLI help
   -i, --input=input    Path to directory with Joi schemas
-  -j, --joi            Copies Joi to directory specified by output
   -o, --output=output  Directory to store output
   -p, --postman        Compiles Postman scripts from OAS spec to directory specified by output
   -t, --ts             Compiles Typescript Interfaces from OAS spec to directory specified by output
-  -v, --version        show CLI version
+  -v, --version        Show CLI version
+  -w, --warn           Enable warnings
 ```
 
 # Example
@@ -41,7 +41,7 @@ must look like this:
 ```sh-session
 $ tree ./example
 ./example
-├── joi                                // can be hierarchical
+├── schema                              // can be hierarchical
 │   ├── common
 │   │   ├── Engine.js
 │   │   └── Wheel.js
@@ -66,7 +66,7 @@ $ tree ./example
 ```
 
 ```sh-session
-$ con --input ./example --output ./autogen --joi --ts --postman
+$ con --input ./example --output ./autogen --ts --postman
 ---------------
  Compiling Joi 
 ---------------
@@ -91,41 +91,38 @@ $ con --input ./example --output ./autogen --joi --ts --postman
 ```
 
 ```sh-session
-$ tree ./autogen
-./autogen
-├── common
-│   ├── Engine.json
-│   └── Wheel.json
-├── joi
-│   ├── common
-│   │   ├── Engine.js
-│   │   └── Wheel.js
-│   ├── service1
-│   │   ├── RequestCar.js
-│   │   ├── RequestTruck.js
-│   │   ├── ResponseCar.js
-│   │   └── ResponseTruck.js
-│   └── service2
-│       ├── RequestAircraft.js
-│       ├── RequestHelicopter.js
-│       ├── ResponseAircraft.js
-│       └── ResponseHelicopter.js
-├── service1
-│   ├── RequestCar.json
-│   ├── RequestTruck.json
-│   ├── ResponseCar.json
-│   └── ResponseTruck.json
-├── service2
-│   ├── RequestAircraft.json
-│   ├── RequestHelicopter.json
-│   ├── ResponseAircraft.json
-│   └── ResponseHelicopter.json
-├── service1.oas.json
-├── service1.postman.json
-├── service1.ts
-├── service2.oas.json
-├── service2.postman.json
-└── service2.ts
-
-7 directories, 26 files
+$ tree ./autogen/
+  ./autogen/
+  ├── schema
+  │   ├── common
+  │   │   ├── Engine.js
+  │   │   ├── Engine.oas.json
+  │   │   ├── Wheel.js
+  │   │   └── Wheel.oas.json
+  │   ├── service1
+  │   │   ├── RequestCar.js
+  │   │   ├── RequestCar.oas.json
+  │   │   ├── RequestTruck.js
+  │   │   ├── RequestTruck.oas.json
+  │   │   ├── ResponseCar.js
+  │   │   ├── ResponseCar.oas.json
+  │   │   ├── ResponseTruck.js
+  │   │   └── ResponseTruck.oas.json
+  │   └── service2
+  │       ├── RequestAircraft.js
+  │       ├── RequestAircraft.oas.json
+  │       ├── RequestHelicopter.js
+  │       ├── RequestHelicopter.oas.json
+  │       ├── ResponseAircraft.js
+  │       ├── ResponseAircraft.oas.json
+  │       ├── ResponseHelicopter.js
+  │       └── ResponseHelicopter.oas.json
+  ├── service1.oas.json
+  ├── service1.postman.json
+  ├── service1.ts
+  ├── service2.oas.json
+  ├── service2.postman.json
+  └── service2.ts
+  
+  4 directories, 26 files
 ```
