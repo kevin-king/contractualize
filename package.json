@@ -1,7 +1,7 @@
 {
   "name": "@kevinki.ng/contractualize",
   "description": "Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Kevin King",
   "bin": {
     "con": "./bin/run"
@@ -22,7 +22,6 @@
     "mocha": "^5.2.0",
     "nyc": "^14.1.1",
     "oclif": "1.18.1",
-    "openapi-enforcer": "^1.15.3",
     "openapi-to-postmanv2": "2.9.0",
     "swagger-typescript-api": "9.2.0",
     "ts-node": "^8.10.2",
@@ -56,6 +55,7 @@
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
-    "tslib": "^1.14.1"
+    "tslib": "^1.14.1",
+    "openapi-enforcer": "^1.15.3"
   }
 }
