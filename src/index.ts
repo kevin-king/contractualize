@@ -29,6 +29,7 @@ class ContractConverter extends Command {
     postman: flags.boolean({char: 'p', description: 'Compiles Postman scripts from OAS spec to directory specified by output'}),
     ts: flags.boolean({char: 't', description: 'Compiles Typescript Interfaces from OAS spec to directory specified by output'}),
     version: flags.version({char: 'v', description: 'Show CLI version'}),
+    warn: flags.boolean({char: 'w', description: 'Enable warnings'}),
   }
 
   // static args = [{name: 'file'}]
@@ -80,7 +81,7 @@ class ContractConverter extends Command {
         .then(({ error, warning }: any) => {
           if (error) {
             console.error(error)
-          } else if (warning) {
+          } else if (flags.warn && warning) {
             console.warn(warning)
           }
         }).catch((error: Error) => console.error(error))
