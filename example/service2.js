@@ -1,9 +1,6 @@
 const { CommonHeaderParams } = require('./swagger/CommonHeaderParams');
 
-const RequestAircraft = require('@kevinki.ng/contractualize/service2/RequestAircraft');
-const ResponseAircraft = require('@kevinki.ng/contractualize/service2/ResponseAircraft');
-const RequestHelicopter = require('@kevinki.ng/contractualize/service2/RequestHelicopter');
-const ResponseHelicopter = require('@kevinki.ng/contractualize/service2/ResponseHelicopter');
+const Service2Schema = require('../autogen/service2');
 
 module.exports = {
   openapi: '3.0.1',
@@ -67,11 +64,6 @@ module.exports = {
     },
   },
   components: {
-    schemas: {
-      RequestAircraft,
-      ResponseAircraft,
-      RequestHelicopter,
-      ResponseHelicopter,
-    },
+    schemas: Service2Schema,
   },
 }
