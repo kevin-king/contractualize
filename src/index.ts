@@ -5,6 +5,7 @@ import j2s from 'joi-to-swagger'
 import { generateApi } from 'swagger-typescript-api'
 const Converter = require('openapi-to-postmanv2')
 const enforcer = require('openapi-enforcer')
+import { pom } from './pom'
 
 function forEachFileIn(dirPath: string, callback: (arg0: string, arg1: string) => void) {
   fs.readdirSync(dirPath).forEach(file => {
@@ -122,6 +123,14 @@ class ContractConverter extends Command {
 
     if (flags.java) {
       const mvn = require('maven').create({})
+
+      const oasSpecFileNames: Array<string> = []
+      fs.readdirSync(OUTPUT_PATH).forEach((fileName: string) => {
+        if (fileName.indexOf('.oas.json') <= -1) return
+        oasSpecFileNames.push(fileName)
+      })
+
+      fs.writeFileSync('pom.xml', pom(OUTPUT_PATH, oasSpecFileNames))
 
       mvn.execute(['clean', 'generate-sources'], { skipTests: true }).then(() => {
         // As mvn.execute(..) returns a promise, you can use this block to continue
