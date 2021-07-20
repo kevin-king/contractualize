@@ -94,38 +94,27 @@ $ con --input ./example --output ./autogen --ts --postman --java
 $ tree ./autogen
 ./autogen
 ├── java
-│   ├── service1
-│   │   └── src
-│   │       └── main
-│   │           └── java
-│   │               └── io
-│   │                   └── swagger
-│   │                       └── client
-│   │                           └── model
-│   │                               ├── Engine.java
-│   │                               ├── RequestCar.java
-│   │                               ├── RequestCarParts.java
-│   │                               ├── RequestTruck.java
-│   │                               ├── RequestTruckParts.java
-│   │                               ├── ResponseCar.java
-│   │                               ├── ResponseTruck.java
-│   │                               └── Wheel.java
-│   └── service2
-│       └── src
-│           └── main
-│               └── java
-│                   └── io
-│                       └── swagger
-│                           └── client
-│                               └── model
-│                                   ├── Engine.java
-│                                   ├── RequestAircraft.java
-│                                   ├── RequestAircraftParts.java
-│                                   ├── RequestHelicopter.java
-│                                   ├── RequestHelicopterParts.java
-│                                   ├── ResponseAircraft.java
-│                                   ├── ResponseHelicopter.java
-│                                   └── Wheel.java
+│   ├── service1.src.main.java.io.swagger.client.model
+│   │   ├── Engine.java
+│   │   ├── RequestCar.java
+│   │   ├── RequestCarParts.java
+│   │   ├── RequestTruck.java
+│   │   ├── RequestTruckParts.java
+│   │   ├── ResponseCar.java
+│   │   ├── ResponseTruck.java
+│   │   └── Wheel.java
+│   └── service2.src.main.java.io.swagger.client.model
+│       ├── Engine.java
+│       ├── RequestAircraft.java
+│       ├── RequestAircraftParts.java
+│       ├── RequestHelicopter.java
+│       ├── RequestHelicopterParts.java
+│       ├── ResponseAircraft.java
+│       ├── ResponseHelicopter.java
+│       └── Wheel.java
+│── typescript
+│   ├── service1.ts
+│   └── service2.ts
 ├── schema
 │   ├── common
 │   │   ├── Engine.js
@@ -152,12 +141,8 @@ $ tree ./autogen
 │       └── ResponseHelicopter.oas.json
 ├── service1.oas.json
 ├── service1.postman.json
-├── service1.ts
 ├── service2.oas.json
-├── service2.postman.json
-└── service2.ts
+└── service2.postman.json
 
-21 directories, 42 files
-
-4 directories, 26 files
+22 directories, 42 files
 ```

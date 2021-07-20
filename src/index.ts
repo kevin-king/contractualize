@@ -114,7 +114,8 @@ class ContractConverter extends Command {
         })
         .then(({ files, configuration }) => {
           files.forEach(({ content, name }) => {
-            fs.writeFileSync(`${OUTPUT_PATH}/${fileName.replace('.oas.json', '.ts')}`, content)
+            fs.mkdirSync(`${OUTPUT_PATH}/typescript`, {recursive: true})
+            fs.writeFileSync(`${OUTPUT_PATH}/typescript/${fileName.replace('.oas.json', '.ts')}`, content)
           })
         })
         .catch(error => console.error(error))
