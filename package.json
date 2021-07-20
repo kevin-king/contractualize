@@ -46,7 +46,7 @@
   },
   "repository": "https://github.com/kevin-king/contractualize.git",
   "scripts": {
-    "demo": "./bin/run --input ./example --output ./autogen --ts --postman --java",
+    "demo": "rm -rf ./autogen && ./bin/run --input ./example --output ./autogen --ts --postman --java",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",

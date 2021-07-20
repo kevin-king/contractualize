@@ -14,16 +14,25 @@
         <version>3.0.27</version>
         <executions>
           <execution>
+            <id>service1</id>
             <goals>
               <goal>generate</goal>
             </goals>
             <configuration>
               <inputSpec>${project.basedir}/autogen/service1.oas.json</inputSpec>
-              <output>${project.basedir}/autogen/java</output>
+              <output>${project.basedir}/autogen/java/service1</output>
               <language>java</language>
-<!--              <configOptions>-->
-<!--                <sourceFolder>src/gen/java/main</sourceFolder>-->
-<!--              </configOptions>-->
+            </configuration>
+          </execution>
+          <execution>
+            <id>service2</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/autogen/service2.oas.json</inputSpec>
+              <output>${project.basedir}/autogen/java/service2</output>
+              <language>java</language>
             </configuration>
           </execution>
         </executions>
