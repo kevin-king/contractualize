@@ -1,7 +1,7 @@
 Contractualize
 ==============
 
-Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.
+Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, Java, and Postman.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@kevinki.ng/contractualize.svg)](https://npmjs.org/package/@kevinki.ng/contractualize)
@@ -17,7 +17,7 @@ $ npm install --save-dev @kevinki.ng/contractualize
 $ con --version
 @kevinki.ng/contractualize/0.0.0 darwin-x64 node-v14.17.0
 $ con --help
-Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.
+Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, Java, and Postman.
 
 USAGE
   $ con
@@ -66,7 +66,7 @@ $ tree ./example
 ```
 
 ```sh-session
-$ con --input ./example --output ./autogen --ts --postman
+$ con --input ./example --output ./autogen --ts --postman --java
 ---------------
  Compiling Joi 
 ---------------
@@ -93,6 +93,39 @@ $ con --input ./example --output ./autogen --ts --postman
 ```sh-session
 $ tree ./autogen
 ./autogen
+├── java
+│   ├── service1
+│   │   └── src
+│   │       └── main
+│   │           └── java
+│   │               └── io
+│   │                   └── swagger
+│   │                       └── client
+│   │                           └── model
+│   │                               ├── Engine.java
+│   │                               ├── RequestCar.java
+│   │                               ├── RequestCarParts.java
+│   │                               ├── RequestTruck.java
+│   │                               ├── RequestTruckParts.java
+│   │                               ├── ResponseCar.java
+│   │                               ├── ResponseTruck.java
+│   │                               └── Wheel.java
+│   └── service2
+│       └── src
+│           └── main
+│               └── java
+│                   └── io
+│                       └── swagger
+│                           └── client
+│                               └── model
+│                                   ├── Engine.java
+│                                   ├── RequestAircraft.java
+│                                   ├── RequestAircraftParts.java
+│                                   ├── RequestHelicopter.java
+│                                   ├── RequestHelicopterParts.java
+│                                   ├── ResponseAircraft.java
+│                                   ├── ResponseHelicopter.java
+│                                   └── Wheel.java
 ├── schema
 │   ├── common
 │   │   ├── Engine.js
@@ -123,6 +156,8 @@ $ tree ./autogen
 ├── service2.oas.json
 ├── service2.postman.json
 └── service2.ts
+
+21 directories, 42 files
 
 4 directories, 26 files
 ```

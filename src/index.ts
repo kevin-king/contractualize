@@ -19,7 +19,7 @@ function forEachFileIn(dirPath: string, callback: (arg0: string, arg1: string) =
 }
 
 class ContractConverter extends Command {
-  static description = 'Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.'
+  static description = 'Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, Java, and Postman.'
 
   static flags = {
     help: flags.help({char: 'h', description: 'Show CLI help'}),

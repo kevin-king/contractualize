@@ -1,7 +1,7 @@
 {
   "name": "@kevinki.ng/contractualize",
-  "description": "Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, and Postman.",
-  "version": "0.3.2",
+  "description": "Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, Java, and Postman.",
+  "version": "0.4.0",
   "author": "Kevin King",
   "bin": {
     "con": "./bin/run"
