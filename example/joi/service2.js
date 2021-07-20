@@ -1,18 +1,16 @@
 const Joi = require("joi");
-const CommonSchema = require("./common");
+const { Engine, Wheel } = require("./common");
 
 module.exports = {
-  ...CommonSchema,
   RequestAircraft: Joi.object({
     parts: Joi.object({
-      engine: Joi.object().meta({ className: 'Engine' }),
-      wheels: Joi.array().items(
-        Joi.object().meta({ className: 'Wheel' })
-      ).length(2),
+      engine: Engine,
+      wheels: Joi.array().items(Wheel).length(2),
     }),
     color: Joi.string(),
     wingWidth: Joi.number().required(),
   }),
+
   ResponseAircraft: Joi.object({
     make: Joi.string(),
     model: Joi.string(),
@@ -21,11 +19,12 @@ module.exports = {
 
   RequestHelicopter: Joi.object({
     parts: Joi.object({
-      engine: Joi.object().meta({ className: 'Engine' }),
+      engine: Engine,
     }),
     color: Joi.string(),
     bladeLength: Joi.number().required(),
   }),
+
   ResponseHelicopter: Joi.object({
     make: Joi.string(),
     model: Joi.string(),
