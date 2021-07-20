@@ -3,7 +3,6 @@ import * as fs from 'fs'
 import { Command, flags } from '@oclif/command'
 import j2s from 'joi-to-swagger'
 import { generateApi } from 'swagger-typescript-api'
-// import Converter from 'openapi-to-postmanv2'
 const Converter = require('openapi-to-postmanv2')
 const enforcer = require('openapi-enforcer')
 
@@ -24,6 +23,7 @@ class ContractConverter extends Command {
   static flags = {
     help: flags.help({char: 'h', description: 'Show CLI help'}),
     input: flags.string({char: 'i', description: 'Path to directory with Joi schemas'}),
+    java: flags.boolean({char: 'j', description: 'Compiles Java Interfaces from OAS spec to directory specified by output'}),
     output: flags.string({char: 'o', description: 'Directory to store output'}),
     postman: flags.boolean({char: 'p', description: 'Compiles Postman scripts from OAS spec to directory specified by output'}),
     ts: flags.boolean({char: 't', description: 'Compiles Typescript Interfaces from OAS spec to directory specified by output'}),
@@ -117,6 +117,15 @@ class ContractConverter extends Command {
           })
         })
         .catch(error => console.error(error))
+      })
+    }
+
+    if (flags.java) {
+      const mvn = require('maven').create({})
+
+      mvn.execute(['clean', 'generate-sources'], { skipTests: true }).then(() => {
+        // As mvn.execute(..) returns a promise, you can use this block to continue
+        // your stuff, once the execution of the command has been finished successfully.
       })
     }
 

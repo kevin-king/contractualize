@@ -19,6 +19,7 @@
     "eslint-config-oclif-typescript": "^0.1.0",
     "joi": "17.4.1",
     "joi-to-swagger": "5.2.0",
+    "maven": "^5.0.0",
     "mocha": "^5.2.0",
     "nyc": "^14.1.1",
     "oclif": "1.18.1",
@@ -45,6 +46,7 @@
   },
   "repository": "https://github.com/kevin-king/contractualize.git",
   "scripts": {
+    "demo": "./bin/run --input ./example --output ./autogen --ts --postman --java",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
@@ -55,7 +57,7 @@
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
-    "tslib": "^1.14.1",
-    "openapi-enforcer": "^1.15.3"
+    "openapi-enforcer": "^1.15.3",
+    "tslib": "^1.14.1"
   }
 }

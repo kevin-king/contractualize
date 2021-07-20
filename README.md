@@ -91,38 +91,38 @@ $ con --input ./example --output ./autogen --ts --postman
 ```
 
 ```sh-session
-$ tree ./autogen/
-  ./autogen/
-  ├── schema
-  │   ├── common
-  │   │   ├── Engine.js
-  │   │   ├── Engine.oas.json
-  │   │   ├── Wheel.js
-  │   │   └── Wheel.oas.json
-  │   ├── service1
-  │   │   ├── RequestCar.js
-  │   │   ├── RequestCar.oas.json
-  │   │   ├── RequestTruck.js
-  │   │   ├── RequestTruck.oas.json
-  │   │   ├── ResponseCar.js
-  │   │   ├── ResponseCar.oas.json
-  │   │   ├── ResponseTruck.js
-  │   │   └── ResponseTruck.oas.json
-  │   └── service2
-  │       ├── RequestAircraft.js
-  │       ├── RequestAircraft.oas.json
-  │       ├── RequestHelicopter.js
-  │       ├── RequestHelicopter.oas.json
-  │       ├── ResponseAircraft.js
-  │       ├── ResponseAircraft.oas.json
-  │       ├── ResponseHelicopter.js
-  │       └── ResponseHelicopter.oas.json
-  ├── service1.oas.json
-  ├── service1.postman.json
-  ├── service1.ts
-  ├── service2.oas.json
-  ├── service2.postman.json
-  └── service2.ts
-  
-  4 directories, 26 files
+$ tree ./autogen
+./autogen
+├── schema
+│   ├── common
+│   │   ├── Engine.js
+│   │   ├── Engine.oas.json
+│   │   ├── Wheel.js
+│   │   └── Wheel.oas.json
+│   ├── service1
+│   │   ├── RequestCar.js
+│   │   ├── RequestCar.oas.json
+│   │   ├── RequestTruck.js
+│   │   ├── RequestTruck.oas.json
+│   │   ├── ResponseCar.js
+│   │   ├── ResponseCar.oas.json
+│   │   ├── ResponseTruck.js
+│   │   └── ResponseTruck.oas.json
+│   └── service2
+│       ├── RequestAircraft.js
+│       ├── RequestAircraft.oas.json
+│       ├── RequestHelicopter.js
+│       ├── RequestHelicopter.oas.json
+│       ├── ResponseAircraft.js
+│       ├── ResponseAircraft.oas.json
+│       ├── ResponseHelicopter.js
+│       └── ResponseHelicopter.oas.json
+├── service1.oas.json
+├── service1.postman.json
+├── service1.ts
+├── service2.oas.json
+├── service2.postman.json
+└── service2.ts
+
+4 directories, 26 files
 ```

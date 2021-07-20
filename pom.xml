@@ -1,0 +1,33 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ng.kevinki.contractualize</groupId>
+  <artifactId>contractualize</artifactId>
+  <version>0.3.2</version>
+  <packaging>jar</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.swagger.codegen.v3</groupId>
+        <artifactId>swagger-codegen-maven-plugin</artifactId>
+        <version>3.0.27</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/autogen/service1.oas.json</inputSpec>
+              <output>${project.basedir}/autogen/java</output>
+              <language>java</language>
+<!--              <configOptions>-->
+<!--                <sourceFolder>src/gen/java/main</sourceFolder>-->
+<!--              </configOptions>-->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
