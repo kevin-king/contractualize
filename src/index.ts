@@ -5,6 +5,7 @@ import j2s from 'joi-to-swagger'
 import { generateApi } from 'swagger-typescript-api'
 // import Converter from 'openapi-to-postmanv2'
 const Converter = require('openapi-to-postmanv2')
+const enforcer = require('openapi-enforcer')
 
 function forEachFileIn(dirPath: string, callback: (arg0: string, arg1: string) => void) {
   fs.readdirSync(dirPath).forEach(file => {
@@ -75,6 +76,16 @@ class ContractConverter extends Command {
         fs.writeFileSync(`${INTPUT_PATH}/${fileName}.tmp`, fileContent)
 
         const swagger = require(`${INTPUT_PATH}/${fileName}.tmp`)
+        enforcer(swagger, { fullResult: true })
+        .then(({ error, warning }: any) => {
+          if (error) {
+            console.error(error)
+          } else {
+            console.log('No errors with your document')
+            if (warning) console.warn(warning)
+          }
+        }).catch((error: Error) => console.error(error))
+
         fs.writeFileSync(`${OUTPUT_PATH}/${fileName.replace('.js', '.oas.json')}`, JSON.stringify(swagger))
 
         fs.unlinkSync(`${INTPUT_PATH}/${fileName}.tmp`)
