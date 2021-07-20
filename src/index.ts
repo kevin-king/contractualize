@@ -80,9 +80,8 @@ class ContractConverter extends Command {
         .then(({ error, warning }: any) => {
           if (error) {
             console.error(error)
-          } else {
-            console.log('No errors with your document')
-            if (warning) console.warn(warning)
+          } else if (warning) {
+            console.warn(warning)
           }
         }).catch((error: Error) => console.error(error))
 
