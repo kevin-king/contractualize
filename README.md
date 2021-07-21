@@ -25,6 +25,7 @@ USAGE
 OPTIONS
   -h, --help           Show CLI help
   -i, --input=input    Path to directory with Joi schemas
+  -j, --java           Compiles Java Interfaces from OAS spec to directory specified by output
   -o, --output=output  Directory to store output
   -p, --postman        Compiles Postman scripts from OAS spec to directory specified by output
   -t, --ts             Compiles Typescript Interfaces from OAS spec to directory specified by output
