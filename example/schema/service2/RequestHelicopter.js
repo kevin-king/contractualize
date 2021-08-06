@@ -3,7 +3,7 @@ const { Engine } = require("../common/Engine");
 
 module.exports.RequestHelicopter = Joi.object({
   parts: Joi.object({
-    engine: Engine.meta({ className: 'Engine' }),
+    engine: Engine,
   }),
   color: Joi.string(),
   bladeLength: Joi.number().required(),

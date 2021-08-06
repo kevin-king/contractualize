@@ -5,6 +5,7 @@ import j2s from 'joi-to-swagger'
 import { generateApi } from 'swagger-typescript-api'
 const Converter = require('openapi-to-postmanv2')
 const enforcer = require('openapi-enforcer')
+const { generate, option } = require('json-schema-faker')
 import { pom } from './pom'
 
 function forEachFileIn(dirPath: string, callback: (arg0: string, arg1: string) => void) {
@@ -22,6 +23,7 @@ class ContractConverter extends Command {
   static description = 'Write your API models in Joi. Automatically generate OAS 3.0, TypeScript, Java, and Postman.'
 
   static flags = {
+    examples: flags.boolean({char: 'e', description: 'Compiles example JSON payloads from OAS spec to directory specified by output'}),
     help: flags.help({char: 'h', description: 'Show CLI help'}),
     input: flags.string({char: 'i', description: 'Path to directory with Joi schemas'}),
     java: flags.boolean({char: 'j', description: 'Compiles Java Interfaces from OAS spec to directory specified by output'}),
@@ -64,6 +66,22 @@ class ContractConverter extends Command {
     // specs. More predictable from consumer standpoint. The compilation step after this will all utilize --output
     // as well.
     fs.renameSync(`${INTPUT_PATH}/${TMP_DIRNAME}`, OUTPUT_PATH)
+
+    if (flags.examples) {
+      console.log('----------------------------')
+      console.log(' Generating Sample Payloads ')
+      console.log('----------------------------')
+      option({
+        alwaysFakeOptionals: true,
+        useDefaultValue: true,
+        useExamplesValue: true,
+      });
+      forEachFileIn(`${OUTPUT_PATH}/schema/`, (dir, file) => {
+        if (file.indexOf('.oas.json') <= -1) return
+        const schema = require(`${dir}/${file}`)
+        fs.writeFileSync(`${dir}/${file.replace('.oas.json', '.example.json')}`, JSON.stringify(generate(schema)))
+      })
+    }
 
     console.log('---------------')
     console.log(' Compiling OAS ')
@@ -143,6 +161,7 @@ class ContractConverter extends Command {
       console.log('-------------------')
       console.log(' Compiling Postman ')
       console.log('-------------------')
+      fs.mkdirSync(`${OUTPUT_PATH}/postman`, { recursive: true });
       fs.readdirSync(OUTPUT_PATH).forEach((fileName: string) => {
         if (fileName.indexOf('.oas.json') <= -1) return
 
@@ -155,7 +174,7 @@ class ContractConverter extends Command {
           }
 
           if (conversionResult.result) {
-            fs.writeFileSync(`${OUTPUT_PATH}/${fileName.replace('.oas.json', '.postman.json')}`, JSON.stringify(conversionResult.output[0].data))
+            fs.writeFileSync(`${OUTPUT_PATH}/postman/${fileName.replace('.oas.json', '.json')}`, JSON.stringify(conversionResult.output[0].data))
           } else {
             console.error('Could not convert', conversionResult.reason)
           }
@@ -165,7 +184,7 @@ class ContractConverter extends Command {
       console.log('----------------')
       console.log(' Extend Postman ')
       console.log('----------------')
-      forEachFileIn(OUTPUT_PATH, (dirPathAutogen, fileAutogen) => {
+      forEachFileIn(`${OUTPUT_PATH}/postman`, (dirPathAutogen, fileAutogen) => {
         if (fileAutogen.indexOf('.postman.json') <= -1) return
 
         forEachFileIn(`${INTPUT_PATH}/postman/`, (dirPathPostman, filePostman) => {

@@ -1,4 +1,4 @@
-const postmanObject = require("../../autogen/service1.postman.json");
+const postmanObject = require("../../autogen/postman/service1.json");
 
 postmanObject.item[0].event = [
   {
