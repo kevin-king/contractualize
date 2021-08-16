@@ -5,7 +5,7 @@ import j2s from 'joi-to-swagger'
 import { generateApi } from 'swagger-typescript-api'
 const Converter = require('openapi-to-postmanv2')
 const enforcer = require('openapi-enforcer')
-const { generate, option } = require('json-schema-faker')
+const Felicity = require("felicity");
 import { pom } from './pom'
 
 function forEachFileIn(dirPath: string, callback: (arg0: string, arg1: string) => void) {
@@ -59,6 +59,10 @@ class ContractConverter extends Command {
         const outputDir = dirPath.replace('/schema', `/${TMP_DIRNAME}/schema`)
         fs.mkdirSync(outputDir, {recursive: true})
         fs.writeFileSync(`${outputDir}/${file.replace('.js', '.oas.json')}`, JSON.stringify(swagger))
+
+        if (flags.examples) {
+          fs.writeFileSync(`${outputDir}/${file.replace(".js", ".example.json")}`, JSON.stringify(Felicity.example(joiSchema)));
+        }
       }
     })
 
@@ -66,22 +70,6 @@ class ContractConverter extends Command {
     // specs. More predictable from consumer standpoint. The compilation step after this will all utilize --output
     // as well.
     fs.renameSync(`${INTPUT_PATH}/${TMP_DIRNAME}`, OUTPUT_PATH)
-
-    if (flags.examples) {
-      console.log('----------------------------')
-      console.log(' Generating Sample Payloads ')
-      console.log('----------------------------')
-      option({
-        alwaysFakeOptionals: true,
-        useDefaultValue: true,
-        useExamplesValue: true,
-      });
-      forEachFileIn(`${OUTPUT_PATH}/schema/`, (dir, file) => {
-        if (file.indexOf('.oas.json') <= -1) return
-        const schema = require(`${dir}/${file}`)
-        fs.writeFileSync(`${dir}/${file.replace('.oas.json', '.example.json')}`, JSON.stringify(generate(schema)))
-      })
-    }
 
     console.log('---------------')
     console.log(' Compiling OAS ')
