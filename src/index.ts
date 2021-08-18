@@ -61,7 +61,12 @@ class ContractConverter extends Command {
         fs.writeFileSync(`${outputDir}/${file.replace('.js', '.oas.json')}`, JSON.stringify(swagger))
 
         if (flags.examples) {
-          fs.writeFileSync(`${outputDir}/${file.replace(".js", ".example.json")}`, JSON.stringify(Felicity.example(joiSchema)));
+          fs.writeFileSync(`${outputDir}/${file.replace(".js", ".example.json")}`, JSON.stringify(Felicity.example(joiSchema, {
+            config: {
+              includeOptional: true,
+              ignoreValids: true, // allows explicit setting of default enum fields by .default()
+            },
+          })))
         }
       }
     })
